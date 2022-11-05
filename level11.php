@@ -31,6 +31,7 @@ $keyBreaked = 'KNHL';
 //echo(xor_encrypt($plaintext,$chiphertext));
 $gooddata = array( "showpassword"=>"yes", "bgcolor"=>"#ffffff");
 $good_data_plain = json_encode($gooddata);
+echo($good_data_plain);
 $good_cipher = xor_encrypt($good_data_plain, $keyBreaked);
 //echo($good_cipher);
 $cookie_data = base64_encode($good_cipher);
